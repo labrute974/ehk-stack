@@ -1,4 +1,4 @@
-= ElasticSearch / Heka / Kibana with a Consul cluster
+# ElasticSearch / Heka / Kibana with a Consul cluster
 
 This git repo is about how to set up and ElasticSearch Heka Kibana stack 
 with service discovery, on consul.
@@ -12,12 +12,12 @@ The technologies that will be used in this learning tool are:
   - [Heka](http://hekad.readthedocs.org/en/v0.9.2/)
   - [Kibana](https://www.elastic.co/products/kibana)
 
-== Pre-requisities
+## Pre-requisities
 
   - Install [vagrant](https://www.vagrantup.com/downloads.html).
   - Run: vagrant box add chef/centos-7.0
 
-== Consul setup
+## Consul setup
 
 The **Consul** cluster will be running on Bare Centos 7 machines.
 
