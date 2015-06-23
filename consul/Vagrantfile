@@ -1,0 +1,27 @@
+servers = {
+  "consul01" => "192.168.0.11",
+  "consul02" => "192.168.0.12",
+  "consul03" => "192.168.0.13"
+}
+
+Vagrant.configure(2) do |config|
+  config.vm.provision "ansible" do |ansible|
+    ansible.playbook = "../provisioning/playbook.yml"
+    ansible.groups = {
+      "consul" => %w{ consul01 consul02 consul03 }
+    }
+  end
+
+  config.vm.box = "chef/centos-7.0"
+  config.vm.synced_folder ".", "/vagrant", disabled: true
+
+  %w{ consul01 consul02 consul03 }.each do |name|
+    config.vm.define name do |consul|
+      consul.vm.hostname = name
+      consul.vm.network "private_network", ip: servers[name]
+      consul.vm.provider "virtualbox" do |v|
+        v.name = name
+      end
+    end
+  end
+end

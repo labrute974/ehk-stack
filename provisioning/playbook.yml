@@ -1,0 +1,7 @@
+---
+- hosts: consul
+  sudo: yes
+  tasks:
+    - include: consul/tasks.yml
+  vars_files:
+    - consul/vars.yml

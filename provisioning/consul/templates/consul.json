@@ -1,0 +1,12 @@
+{
+  "datacenter": "local",
+  "server": true,
+  "log_level": "INFO",
+  "data_dir": "/tmp/",
+  "enable_syslog": true,
+  "bootstrap_expect": 3,
+  "bind_addr": "{{ ansible_enp0s8.ipv4.address }}",
+  "node_name": "{{ ansible_hostname }}",
+  "start_join": {{ consul_cluster }},
+  "recursors": {{ upstream_dns }}
+}

@@ -1,0 +1,26 @@
+---
+- name: upgrade all packages
+  yum: name=* state=latest
+
+- name: install unzip
+  yum: name=unzip state=latest
+
+- name: create temp directory for consul
+  file: path=/tmp/consul state=directory mode=0755
+
+- name: download the consul package
+  get_url: url=https://dl.bintray.com/mitchellh/consul/{{ item.package }} dest=/tmp/consul/{{ item.package }} force=no
+  with_items:
+    - { package: 0.5.2_linux_amd64.zip }
+
+- name: unzip consul package
+  unarchive: creates="/tmp/consul/consul" src=0.5.2_linux_amd64.zip dest=/tmp/consul copy=yes
+
+- name: move
+  command: creates="/usr/local/bin/consul" mv /tmp/consul/consul /usr/local/bin/consul
+
+- name: create config directories for consul
+  file: path=/etc/consul.d/ state=directory mode=0755
+
+- name: copy config files for consul
+  template: src="consul/templates/consul.json" dest="/etc/consul.d/"
